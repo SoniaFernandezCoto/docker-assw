@@ -1,9 +1,13 @@
+import os
 from flask import Flask, jsonify
 from flask_cors import CORS
 import sqlite3
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "http://localhost:8084"}})
+
+# Configura CORS con la variable de entorno para el puerto del frontend
+frontend_url = f"http://localhost:{os.getenv('FRONTEND_PORT', '8085')}"
+CORS(app, resources={r"/*": {"origins": frontend_url}})
 
 @app.route('/get-data', methods=['GET'])
 def get_data():
@@ -22,4 +26,4 @@ def get_data():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=int(os.getenv('BACKEND_PORT', 5000)))  # Usa la variable de entorno para el puerto

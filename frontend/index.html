@@ -11,8 +11,11 @@
   <p id="result"></p>
 
   <script>
+    const backendIp = '172.16.238.11';  
+    const backendPort = 5000;  
+
     function fetchData() {
-        fetch('http://172.23.0.3:5000/get-data')
+        fetch(`http://${backendIp}:${backendPort}/get-data`)
         .then(response => response.json())
         .then(data => {
           document.getElementById('result').innerHTML = "Respuesta del backend: " + data.message;
@@ -22,5 +25,6 @@
         });
     }
   </script>
+  
 </body>
 </html>
