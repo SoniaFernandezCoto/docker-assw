@@ -12,7 +12,7 @@
 
   <script>
     function fetchData() {
-        fetch('http://backend/get-data')
+        fetch('http://172.23.0.3:5000/get-data')
         .then(response => response.json())
         .then(data => {
           document.getElementById('result').innerHTML = "Respuesta del backend: " + data.message;

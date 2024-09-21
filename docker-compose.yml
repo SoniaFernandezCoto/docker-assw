@@ -1,4 +1,3 @@
-version: '3.8'
 services:
   frontend:
     build: ./frontend
@@ -7,7 +6,7 @@ services:
     depends_on:
       - backend
     networks:
-      - frontend-backend-network
+      - frontend-backend-network  
 
   db:
     build:
@@ -15,7 +14,7 @@ services:
     volumes:
       - ./db/data:/var/lib/sqlite
     networks:
-      - backend-db-network
+      - backend-db-network         
     command: >
       sh -c "sqlite3 /var/lib/sqlite/app.db < /init.sql && tail -f /dev/null"
 
@@ -26,10 +25,8 @@ services:
     depends_on:
       - db
     networks:
-      - frontend-backend-network
-      - backend-db-network
-    ports:
-    - "5000:5000"
+      - frontend-backend-network  
+      - backend-db-network         
 
 networks:
   frontend-backend-network:
