@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Frontend</title>
+</head>
+<body>
+  <h1>Consulta a la base de datos</h1>
+  <button onclick="fetchData()">Consultar Backend</button>
+  <p id="result"></p>
+
+  <script>
+    function fetchData() {
+        fetch('http://backend/get-data')
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('result').innerHTML = "Respuesta del backend: " + data.message;
+        })
+        .catch(error => {
+          document.getElementById('result').innerHTML = "Error: " + error;
+        });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+version: '3.8'
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "8084:80"
+    depends_on:
+      - backend
+    networks:
+      - frontend-backend-network
+
+  db:
+    build:
+      context: ./database
+    volumes:
+      - ./db/data:/var/lib/sqlite
+    networks:
+      - backend-db-network
+    command: >
+      sh -c "sqlite3 /var/lib/sqlite/app.db < /init.sql && tail -f /dev/null"
+
+  backend:
+    build: ./backend
+    volumes:
+      - ./db/data:/var/lib/sqlite
+    depends_on:
+      - db
+    networks:
+      - frontend-backend-network
+      - backend-db-network
+    ports:
+    - "5000:5000"
+
+networks:
+  frontend-backend-network:
+    driver: bridge
+  backend-db-network:
+    driver: bridge
